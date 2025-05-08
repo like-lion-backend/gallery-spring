@@ -1,3 +1,22 @@
 spring:
   application:
     name: backend
+  servlet: #
+    multipart: # multipart 요청 관련 설정
+      max-file-size: 20MB # 업로드할 수 있는 파일의 최대 용량
+      max-request-size: 20MB # 한 번의 요청에서 파일의 최대 용량
+
+    datasource: # DB 설정 (MySQL)
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/likelion # "likelion" -> 사용할 DB 이름으로 변경
+      username: root # MySQL 유저이름 (루트계정)
+      password: "Mongsam28534760!" # 루트계정 비밀번호
+
+    jpa:
+      database-platform: org.hibernate.dialect.MySQL8Dialect
+      hibernate:
+        ddl-auto: create # 서버를 실행할 때마다 테이블을 지우고 새로 생성 (테이블 정의 과정에서 추천)
+      show-sql: true # jpa가 만드는 sql문 터미널에 출력
+      properties:
+        hibernate:
+          format_sql: true
