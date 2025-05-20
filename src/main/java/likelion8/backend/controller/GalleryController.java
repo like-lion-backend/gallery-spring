@@ -17,7 +17,7 @@ public class GalleryController {
 
     private final GalleryService galleryService; // (컨트롤러 -> 서비스 -> 레포지토리) 컨트롤러에서는 서비스를 사용해서 로직 작성
 
-    @GetMapping
+    @GetMapping // GET 요청을 받는다는 것을 명시 (GET /api/galleries)
     public ResponseEntity<List<GalleryResponseDto>> getGalleries() {
 
         // 서비스에 정의해줬던 메소드를 사용해서 컨트롤러 로직 작성
