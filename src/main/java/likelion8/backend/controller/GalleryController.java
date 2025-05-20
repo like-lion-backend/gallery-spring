@@ -19,8 +19,10 @@ public class GalleryController {
 
     @GetMapping
     public ResponseEntity<List<GalleryResponseDto>> getGalleries() {
+
+        // 서비스에 정의해줬던 메소드를 사용해서 컨트롤러 로직 작성
         List<GalleryResponseDto> galleries = galleryService.getAllGalleries();
-        return ResponseEntity.ok(galleries);
+        return ResponseEntity.ok(galleries); // code: 200 OK, response body에는 gallereis가 들어감
     }
 
 
