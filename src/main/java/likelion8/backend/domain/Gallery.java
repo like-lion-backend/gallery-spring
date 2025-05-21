@@ -40,6 +40,12 @@ public class Gallery {
         this.lastUpdate = LocalDateTime.now();
     }
 
+    public void update(GalleryRequestDto dto) {
+        this.title = dto.getTitle();
+        this.description = dto.getDescription();
+        this.lastUpdate = LocalDateTime.now();
+    }
+
     // Setter
     public void setImage(String image) {
         this.image = image;
