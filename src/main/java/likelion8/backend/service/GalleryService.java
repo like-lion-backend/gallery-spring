@@ -27,9 +27,10 @@ public class GalleryService {
         ).toList(); // 마지막으로 리스트 타입으로 변환 (최종 형태는 List<GalleryResponseDto>)
     }
 
+    // 프론트에서 데이터 보냃 때, 주의!!
     public void createGallery(GalleryRequestDto dto, String imageUrl) {
-        Gallery gallery = new Gallery(dto);
-        gallery.setImage(imageUrl);
-        galleryRepository.save(gallery);
+        Gallery gallery = new Gallery(dto); // 전달받은 json 데이터로 Gallery 인스턴스 생성
+        gallery.setImage(imageUrl); // 이미지 업로드 과정을 거쳐서 받은 url을 인스턴스에 추가로 설정
+        galleryRepository.save(gallery); // DB에 저장 (save 메소드는 JpaRepository에서 기본으로 제공)
     }
 }

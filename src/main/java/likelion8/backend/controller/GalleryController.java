@@ -19,7 +19,7 @@ import java.util.List;
 public class GalleryController {
 
     private final GalleryService galleryService; // (컨트롤러 -> 서비스 -> 레포지토리) 컨트롤러에서는 서비스를 사용해서 로직
-    private final ImageService imageService;
+    private final ImageService imageService; // post 요청에서 사용할 이미지 서비스
 
     @GetMapping // GET 요청을 받는다는 것을 명시 (GET /api/galleries)
     public ResponseEntity<List<GalleryResponseDto>> getGalleries() {
@@ -29,21 +29,21 @@ public class GalleryController {
         return ResponseEntity.ok(galleries); // code: 200 OK, response body에는 gallereis가 들어감
     }
 
-    @PostMapping
+    @PostMapping // POST 요청을 받는다는 것을 명시 (POST /api/galleries)
     public ResponseEntity<Void> postGalleries(
-            @RequestPart("image") MultipartFile image,
-            @RequestPart("data") GalleryRequestDto data
+            @RequestPart("image") MultipartFile image, // 파일 형식의 데이터
+            @RequestPart("data") GalleryRequestDto data // json 형식의 데이터
     ) {
         String imageUrl = "";
         try {
-            imageUrl = imageService.saveImageGetUrl(image);
+            imageUrl = imageService.saveImageGetUrl(image); // 이미지를 저장하고 url을 받아오는 메소드
         } catch (IOException e) {
             throw new RuntimeException("이미지 업로드 과정에서 문제가 생겼습니다.");
         }
 
-        galleryService.createGallery(data, imageUrl);
+        galleryService.createGallery(data, imageUrl); // 직접 정의한 Gallery 생성 메소드 사용
 
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.status(HttpStatus.CREATED).build(); // 상태코드: 201 Created, response body는 없습니다!
     }
 
 
