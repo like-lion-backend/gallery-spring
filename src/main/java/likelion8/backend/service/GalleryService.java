@@ -44,4 +44,12 @@ public class GalleryService {
         gallery.update(dto);
         return new GalleryResponseDto(gallery);
     }
+
+    @Transactional
+    public void deleteGallery(Long galleryId) {
+        if (!galleryRepository.existsById(galleryId)) {
+            throw new RuntimeException("해당 갤러리가 존재하지 않습니다: " + galleryId);
+        }
+        galleryRepository.deleteById(galleryId);
+    }
 }
