@@ -55,6 +55,12 @@ public class GalleryController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+    @DeleteMapping("/{galleryId}")
+    public ResponseEntity<Void> deleteGallery(@PathVariable Long galleryId) {
+        galleryService.deleteGallery(galleryId);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
 
     // Lombok의 RequiredArgsConstructor가 아래와 같은 생성자를 만들어 줌
 //    public GalleryController(GalleryService galleryService) {
