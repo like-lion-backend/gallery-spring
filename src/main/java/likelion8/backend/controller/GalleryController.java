@@ -46,6 +46,15 @@ public class GalleryController {
         return ResponseEntity.status(HttpStatus.CREATED).build(); // 상태코드: 201 Created, response body는 없습니다!
     }
 
+    @PutMapping("/{galleryId}")
+    public ResponseEntity<GalleryResponseDto> postGallery(
+            @RequestBody GalleryRequestDto dto,
+            @PathVariable Long galleryId
+    ) {
+        GalleryResponseDto response = galleryService.updateGallery(dto, galleryId);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
 
     // Lombok의 RequiredArgsConstructor가 아래와 같은 생성자를 만들어 줌
 //    public GalleryController(GalleryService galleryService) {
