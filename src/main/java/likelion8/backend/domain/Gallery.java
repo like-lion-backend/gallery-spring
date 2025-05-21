@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import likelion8.backend.dto.GalleryRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -31,4 +32,16 @@ public class Gallery {
     private String description;
 
     private LocalDateTime lastUpdate; // 최근 수정 시간을 "2025-05-10 16:32:56" 처럼 날짜와 시간을 저장
+
+    // dto(json)를 인스턴스로 변환해주는 생성자
+    public Gallery(GalleryRequestDto dto) {
+        this.title = dto.getTitle();
+        this.description = dto.getDescription();
+        this.lastUpdate = LocalDateTime.now();
+    }
+
+    // Setter
+    public void setImage(String image) {
+        this.image = image;
+    }
 }
