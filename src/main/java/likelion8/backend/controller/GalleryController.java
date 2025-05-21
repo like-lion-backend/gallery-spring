@@ -1,13 +1,16 @@
 package likelion8.backend.controller;
 
+import likelion8.backend.dto.GalleryRequestDto;
 import likelion8.backend.dto.GalleryResponseDto;
 import likelion8.backend.service.GalleryService;
+import likelion8.backend.service.ImageService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController //RESTfull 웹 서비스를 만들 때 사용하는 어노테이션. html페이지가 아니라 api 응답을 주고받는 컨트롤러
@@ -15,7 +18,8 @@ import java.util.List;
 @RequiredArgsConstructor //아래 final로 선언된 필드들만 골라서 생성자를 자동으로 생성!
 public class GalleryController {
 
-    private final GalleryService galleryService; // (컨트롤러 -> 서비스 -> 레포지토리) 컨트롤러에서는 서비스를 사용해서 로직 작성
+    private final GalleryService galleryService; // (컨트롤러 -> 서비스 -> 레포지토리) 컨트롤러에서는 서비스를 사용해서 로직
+    private final ImageService imageService;
 
     @GetMapping // GET 요청을 받는다는 것을 명시 (GET /api/galleries)
     public ResponseEntity<List<GalleryResponseDto>> getGalleries() {
@@ -23,6 +27,23 @@ public class GalleryController {
         // 서비스에 정의해줬던 메소드를 사용해서 컨트롤러 로직 작성
         List<GalleryResponseDto> galleries = galleryService.getAllGalleries();
         return ResponseEntity.ok(galleries); // code: 200 OK, response body에는 gallereis가 들어감
+    }
+
+    @PostMapping
+    public ResponseEntity<Void> postGalleries(
+            @RequestPart("image") MultipartFile image,
+            @RequestPart("data") GalleryRequestDto data
+    ) {
+        String imageUrl = "";
+        try {
+            imageUrl = imageService.saveImageGetUrl(image);
+        } catch (IOException e) {
+            throw new RuntimeException("이미지 업로드 과정에서 문제가 생겼습니다.");
+        }
+
+        galleryService.createGallery(data, imageUrl);
+
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
 
