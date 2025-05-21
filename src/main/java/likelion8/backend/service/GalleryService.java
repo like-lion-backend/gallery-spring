@@ -1,6 +1,7 @@
 package likelion8.backend.service;
 
 import likelion8.backend.domain.Gallery;
+import likelion8.backend.dto.GalleryRequestDto;
 import likelion8.backend.dto.GalleryResponseDto;
 import likelion8.backend.repository.GalleryRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,5 +25,11 @@ public class GalleryService {
         return galleries.stream().map(
                 gallery -> new GalleryResponseDto(gallery)
         ).toList(); // 마지막으로 리스트 타입으로 변환 (최종 형태는 List<GalleryResponseDto>)
+    }
+
+    public void createGallery(GalleryRequestDto dto, String imageUrl) {
+        Gallery gallery = new Gallery(dto);
+        gallery.setImage(imageUrl);
+        galleryRepository.save(gallery);
     }
 }
