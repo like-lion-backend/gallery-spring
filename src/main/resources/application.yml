@@ -8,7 +8,7 @@ spring:
 
   datasource: # DB 설정 (MySQL)
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/likelion # "likelion" -> 사용할 DB 이름으로 변경
+    url: jdbc:mysql://localhost:3306/gallery # "likelion" -> 사용할 DB 이름으로 변경
     username: root # MySQL 유저이름 (루트계정)
     password: "Mongsam28534760!" # 루트계정 비밀번호
 
