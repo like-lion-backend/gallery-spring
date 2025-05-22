@@ -1,6 +1,8 @@
 package likelion8.backend.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -11,6 +13,18 @@ import java.nio.file.Paths;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/api/**") // CORS를 허용할 서버의 엔드포인트
+                        .allowedOrigins("http://localhost:3000") // 허용할 클라이언트 URL
+                        .allowedMethods("GET", "POST", "PUT", "DELETE") // 허용할 HTTP 메서드
+                        .allowCredentials(true); // 쿠키 등 인증 정보 허용
+            }
+        };
+    }
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
